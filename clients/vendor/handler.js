@@ -1,6 +1,9 @@
 'use strict';
 
-const eventPool = require('../eventPool');
+// const eventPool = require('../../eventPool');
+const { io } = require('socket.io-client');
+
+const socket = io.connect('http://localhost:3001/caps');
 
 var Chance = require('chance');
 var chance = new Chance();
@@ -15,6 +18,6 @@ module.exports = (store) => {
   };
 
   // console.log(`PICKUP: ${{ payload }}`);
-  eventPool.emit('pickup', payload);
+  socket.emit('pickup', payload);
 
 };

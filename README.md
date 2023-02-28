@@ -4,6 +4,11 @@
 
 ### Authors: Joe Davitt
 
+Collaborators:
+Jordan
+Ty
+Adrienne
+
 ### Problem Domain
 
 Create a caps system
