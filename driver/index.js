@@ -10,3 +10,16 @@ eventPool.on('pickup', (payload) => {
   }, 1000);
 });
 
+eventPool.on('in-transit', (payload) => {
+  setTimeout(() => {
+    eventPool.emit('delivered', payload);
+
+  }, 1000);
+});
+
+eventPool.on('delivered', (payload) => {
+  setTimeout(() => {
+    console.log(`DRIVER: delivered ${payload.orderID}`);
+   
+  }, 1000);
+});
