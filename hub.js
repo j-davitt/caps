@@ -16,22 +16,28 @@ eventPool.on('pickup', (payload) => {
 });
 
 eventPool.on('in-transit', (payload) => {
-  console.log({
-    event: 'in-transit',
-    time: new Date().toISOString(),
-    payload,
-  });
-  eventPool.emit('delivered', payload);
+  setTimeout(() => {
+    console.log({
+      event: 'in-transit',
+      time: new Date().toISOString(),
+      payload,
+    });
+    eventPool.emit('delivered', payload);
+
+  }, 1000);
 });
 
 eventPool.on('delivered', (payload) => {
-  console.log(`DRIVER: delivered ${payload.orderID}`);
-  console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
-  console.log({
-    event: 'delivered',
-    time: new Date().toISOString(),
-    payload,
-  });
+  setTimeout(() => {
+    console.log(`DRIVER: delivered ${payload.orderID}`);
+    console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
+    console.log({
+      event: 'delivered',
+      time: new Date().toISOString(),
+      payload,
+    });
+
+  }, 1000);
 });
 
 
