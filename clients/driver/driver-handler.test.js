@@ -1,7 +1,7 @@
 'use strict';
 
 
-const eventPool = require('../eventPool');
+const eventPool = require('../../eventPool');
 const handler= require('./handler');
 
 

@@ -1,7 +1,22 @@
 'use strict';
 
-const eventPool = require('../eventPool');
+const eventPool = require('../../eventPool');
 const handler = require('./handler');
+
+const { io } = require('socket.io-client');
+
+const socket = io('http://localhost:3001/caps');
+
+eventPool.on('VENDOR', (store) => {
+  setTimeout(() => {
+    handler(store);
+  }, 1000);
+});
+
+eventPool.on('delivered', (payload) => {
+  console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
+});
+
 
 // var Chance = require('chance');
 // var chance = new Chance();
@@ -22,16 +37,3 @@ const handler = require('./handler');
 
 
 // module.exports = newPackage;
-
-eventPool.on('VENDOR', (store) => {
-  setTimeout(() => {
-    handler(store);
-  }, 1000);
-});
-
-eventPool.on('delivered', (payload) => {
-  setTimeout(() => {
-    console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
-   
-  }, 1100);
-});
