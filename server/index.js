@@ -8,6 +8,14 @@ const PORT = process.env.PORT || 3002;
 const server = new Server();
 const caps = server.of('/caps');
 
+function logger(event, payload) {
+  console.log({
+    event,
+    time: new Date().toISOString(),
+    payload,
+  });
+}
+
 caps.on('connection', (socket) => {
   console.log('Socket connected to caps namespace', socket.id);
   // checkout socket.onAny() to see all events
@@ -17,18 +25,23 @@ caps.on('connection', (socket) => {
     console.log('payload is the room ----->', room);
     socket.join(room);
   });
-});
-        
-server.on('connection', (socket) => {
-  console.log('Socket connected to event server', socket.id);
 
   socket.on('pickup', (payload) => {
-    console.log('SERVER: Message event received', payload);
+    logger('pickup', payload);
+    caps.emit('pickup', payload);
+  });
 
-    //3 ways to emit
-    // server.emit('MESSAGE', payload); // sends to all parties including sender
-    socket.broadcast.emit('pickup', payload); // sends to all clients in the namespace except the sender
+  // these will use the caps.to(payload.store).emit() once the driver is set up to join a room as well.
+  socket.on('in-transit', (payload) => {
+    logger('in-transit', payload);
+    caps.emit('in-transit', payload);
+  });
+
+  socket.on('delivered', (payload) => {
+    logger('delivered', payload);
+    caps.emit('delivered', payload);
   });
 });
+
 
 server.listen(PORT);
