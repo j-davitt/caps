@@ -1,25 +1,27 @@
 'use strict';
 
-const eventPool = require('../../eventPool');
+// const eventPool = require('../../eventPool');
 const handler = require('./handler');
 const { io } = require('socket.io-client');
 
-const socket = io('http://localhost:3001/caps');
+const socket = io.connect('http://localhost:3001/caps');
+
+// socket.emit('JOIN', payload.store); need to join room for specific store
 
 
-eventPool.on('pickup', (payload) => {
+socket.on('pickup', (payload) => {
   setTimeout(() => {
     handler(payload);
   }, 1000);
 });
 
-eventPool.on('in-transit', (payload) => {
+socket.on('in-transit', (payload) => {
   setTimeout(() => {
-    eventPool.emit('delivered', payload);
+    socket.emit('delivered', payload);
 
   }, 1000);
 });
 
-eventPool.on('delivered', (payload) => {
+socket.on('delivered', (payload) => {
   console.log(`DRIVER: delivered ${payload.orderID}`);
 });

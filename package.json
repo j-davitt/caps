@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "hub.js",
+  "main": "./server/index.js",
   "scripts": {
-    "start": "node hub.js",
+    "start": "node ./server/index.js",
     "db:config": "sequelize init:config",
     "db:create": "sequelize db:create",
     "test-watch": "NODE_ENV=test jest --verbose --coverage --watchAll",
