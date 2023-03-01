@@ -1,23 +1,30 @@
 'use strict';
 
 // const eventPool = require('../../eventPool');
-const { io } = require('socket.io-client');
 
-const socket = io.connect('http://localhost:3001/caps');
 
 var Chance = require('chance');
 var chance = new Chance();
 
-module.exports = (store) => {
-  
-  const payload = {
-    store: store,
-    orderID: chance.guid(),
-    customer: chance.name(),
-    address: chance.address(),
-  };
+const generateOrder = (socket, payload = null) => {
+  if(!payload){
+    payload = {
+      store: '1-206-flowers',
+      orderID: chance.guid(),
+      customer: chance.name(),
+      address: chance.address(),
+    };
 
-  // console.log(`PICKUP: ${{ payload }}`);
+  }
+
+  console.log('VENDOR: Order ready for pickup.');
   socket.emit('pickup', payload);
 
 };
+
+const packageDelivered = (payload) => {
+  console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
+  process.exit(0);
+}
+
+module.exports = { generateOrder, packageDelivered }; 
