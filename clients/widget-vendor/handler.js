@@ -9,7 +9,7 @@ var chance = new Chance();
 const generateOrder = (socket, payload = null) => {
   if(!payload){
     payload = {
-      store: '1-800-flowers',
+      store: 'acme-widgets',
       orderID: chance.guid(),
       customer: chance.name(),
       address: chance.address(),

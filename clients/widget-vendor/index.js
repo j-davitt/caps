@@ -8,12 +8,12 @@ const { packageDelivered, generateOrder } = require('./handler');
 
 const socket = io.connect('http://localhost:3001/caps');
 
-socket.emit('getAll', {store: '1-800-flowers'});
+socket.emit('getAll', {store: 'acme-widgets'});
 
 
 setInterval(() => {
   generateOrder(socket);
-}, 5000);
+}, 8000);
 
 
 socket.on('delivered', (payload) => {
